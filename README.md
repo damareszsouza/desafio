@@ -182,3 +182,96 @@ document.getElementById('propostaForm').addEventListener('submit', function(even
   document.getElementById('cpf').value = '';
   document.getElementById('valor_solicitado').value = '';
 });
+
+
+teste 2 
+
+ Django e o Django REST Framework instalado em seu ambiente Python.
+
+Crie um novo projeto Django:
+
+festa
+
+cópia de
+$ django-admin startproject nome_do_projeto
+$ cd nome_do_projeto
+Chore hum
+festa
+
+cópia de
+$ python manage.py startapp proposta_emprestimo
+Abra osettings.pysem diretórionome_do_projetoe adicione 'rest_framework
+Pitão
+
+cópia de
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'proposta_emprestimo',
+]
+Nãoproposta_emprestimo, chorarmodels.pycom o seguinte
+Pitão
+
+cópia de
+from django.db import models
+
+class PropostaEmprestimo(models.Model):
+    nome_cliente = models.CharField(max_length=100)
+    valor_emprestimo = models.DecimalField(max_digits=10, decimal_places=2)
+    data_proposta = models.DateField(auto_now_add=True)
+Executar
+festa
+
+cópia de
+$ python manage.py makemigrations
+$ python manage.py migrate
+Não diretoproposta_emprestimo, chorarserializers.pycom o seguinte conteúdo:
+Pitão
+
+cópia de
+from rest_framework import serializers
+from proposta_emprestimo.models import PropostaEmprestimo
+
+class PropostaEmprestimoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PropostaEmprestimo
+        fields = '__all__'
+No diretório proposta_emprestimo, crie um arquivo chamado views.pycom o seguinte conteúdo
+Pitão
+
+cópia de
+from rest_framework import viewsets
+from proposta_emprestimo.models import PropostaEmprestimo
+from proposta_emprestimo.serializers import PropostaEmprestimoSerializer
+
+class PropostaEmprestimoViewSet(viewsets.ModelViewSet):
+    queryset = PropostaEmprestimo.objects.all()
+    serializer_class = PropostaEmprestimoSerializer
+No diretório nome_do_projeto, abra o arquivo urls.pye adicione as seguintes linhas:
+Pitão
+
+cópia de
+from django.urls import include, path
+from rest_framework import routers
+from proposta_emprestimo.views import PropostaEmprestimoViewSet
+
+router = routers.DefaultRouter()
+router.register(r'propostas-emprestimo', PropostaEmprestimoViewSet)
+
+urlpatterns = [
+    path('api/', include(router.urls)),
+]
+Iniciar o servidor de desenvolvimento:
+festa
+
+cópia de
+$ python manage.py runserver
+Agora você pode acessar uma APIhttp://localhost:8000/api/propostas-emprestimo/. ↗
+
+Aqui estão alguns endpoints disponíveis
+
+GET /api/propostas-emprestimo/ - Lista todas as
+PEGAR /
+PUBLICAR
+COLOCAR /api
+EXCLUIR /
